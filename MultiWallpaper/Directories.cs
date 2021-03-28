@@ -12,7 +12,7 @@ namespace MultiWallpaper
         {
             m_arrFolders = arrFolders;
 
-            arrScreens = new string[System.Windows.Forms.Screen.AllScreens.Length];
+            ImagesSetToScreens = new string[System.Windows.Forms.Screen.AllScreens.Length];
 
             m_timer = new Timer();
 
@@ -31,9 +31,18 @@ namespace MultiWallpaper
         private string[] m_arrFolders;
         private Timer m_timer;
         private string[] Paths = new string[4]{ ".bmp", ".jpg", ".jpeg", ".png" };
-        private string[] arrScreens;
+
+        public string[] ImagesSetToScreens { get; set; }
+
         private List<string> m_arrFiles;
 
+        public int ScreenCount
+        {
+            get
+            {
+                return ImagesSetToScreens.Length;
+            }
+        }
         public void Reset(string[] arrFolders)
         {
             m_arrFolders = arrFolders;
@@ -79,15 +88,15 @@ namespace MultiWallpaper
             m_timer.Stop();
             Random rnd = new Random();
             
-            for (int i = 0; i < arrScreens.Length; i++)
+            for (int i = 0; i < ImagesSetToScreens.Length; i++)
             {
                 rnd = new Random(rnd.Next());
-                arrScreens[i] = m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)];
+                ImagesSetToScreens[i] = m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)];
             }
 
             rnd = null;
 
-            Wallpaper.SetDesktopWallpaper(arrScreens);
+            Wallpaper.SetDesktopWallpaper(ImagesSetToScreens);
 
             m_arrFiles = null;
             m_timer.Start();

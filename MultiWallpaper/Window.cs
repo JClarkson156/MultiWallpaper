@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace MultiWallpaper
 {
@@ -13,9 +14,6 @@ namespace MultiWallpaper
     {
         public Window()
         {
-            InitializeStrip();
-            InitializeContext();
-
             Storage store = new Storage();
 
             string[] arrFolders = new string[0];
@@ -27,6 +25,9 @@ namespace MultiWallpaper
 
             if(arrFolders.Length > 0)
                 directory = new MultiWallpaper.Directories(arrFolders);
+
+            InitializeStrip();
+            InitializeContext();
 
             store = null;        
         }
@@ -54,6 +55,17 @@ namespace MultiWallpaper
             SetFolder.Text = "Set Folder";
             SetFolder.Click += SetFolder_Click;
 
+            ToolStripMenuItem Test = new ToolStripMenuItem();
+            Test.Text = "View Current Images";
+
+            for (int i = 0, len = directory.ScreenCount; i < len ; i++)
+            {
+                ToolStripMenuItem images  = new ToolStripMenuItem();
+                images.Text = $"Image {i + 1}";
+                images.Click += OpenImage_Click;
+                Test.DropDownItems.Add(images);
+            }            
+
             ToolStripMenuItem Change = new ToolStripMenuItem();
             Change.Text = "Change";
             Change.Click += Change_Click;
@@ -67,16 +79,28 @@ namespace MultiWallpaper
             Exit.Click += Exit_Click;
 
             menu.Items.Add(SetFolder);
+            menu.Items.Add(Test);
             menu.Items.Add(CleanUp);
             menu.Items.Add(Change);
             menu.Items.Add(Exit);
+        }
+
+        private void OpenImage_Click(object sender, EventArgs e)
+        {
+            var item = sender as ToolStripMenuItem;
+            var index = int.Parse(item.Text.Replace("Image ", ""));
+
+            Process.Start(directory.ImagesSetToScreens[index - 1]);
         }
 
         private void CleanUp_Click(object sender, EventArgs e)
         {
             frmCleanUp clean = new frmCleanUp();
 
-            DialogResult dr = clean.ShowDialog();
+            if (!clean.ClosingForm)
+            {
+                _ = clean.ShowDialog();
+            }
 
             clean.Dispose();
         }
