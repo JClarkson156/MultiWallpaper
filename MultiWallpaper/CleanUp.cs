@@ -158,8 +158,8 @@ namespace MultiWallpaper
 
             folder += "\\Pictures";
 
-            //FileSystemInfo[] infos = new DirectoryInfo(folder + "\\Unsorted").GetFileSystemInfos();
-            FileSystemInfo[] infos = new DirectoryInfo(folder).GetFileSystemInfos();
+            FileSystemInfo[] infos = new DirectoryInfo(folder + "\\Unsorted").GetFileSystemInfos();
+            //FileSystemInfo[] infos = new DirectoryInfo(folder).GetFileSystemInfos();
             var arrFiles = CountFiles(infos);
 
             foreach (var fileName in arrFiles)
@@ -177,13 +177,13 @@ namespace MultiWallpaper
                         file.MoveTo(dir + "\\" + file.Name);
                     else
                     {
-                        /*for (var i = 1; i <= 8; i++)
+                        for (var i = 1; i <= 8; i++)
                         {
                             var fileName2 = dir + "\\" + file.Name;
                             fileName2 = fileName2.Replace(file.Extension, "(" + i + ")" + file.Extension);
                             if (!File.Exists(fileName2))
                                 file.MoveTo(fileName2);
-                        }*/
+                        }
                     }
                 }
                 catch

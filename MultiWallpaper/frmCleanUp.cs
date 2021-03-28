@@ -18,6 +18,8 @@ namespace MultiWallpaper
         public bool removeDuplicate = false;
         public bool moveFiles = false;
 
+        public bool ClosingForm { get; set; } = false;
+
         public frmCleanUp()
         {
             InitializeComponent();
@@ -28,6 +30,8 @@ namespace MultiWallpaper
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                     strDirectory = fbd.SelectedPath;
+                else
+                    ClosingForm = true;
             }
         }
 
