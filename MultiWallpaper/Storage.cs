@@ -82,25 +82,21 @@ namespace MultiWallpaper
             var systemPath = System.Environment.GetFolderPath(
                 Environment.SpecialFolder.LocalApplicationData
             );
-            var complete = Path.Combine(systemPath, "files");
+            var complete = Path.Combine(systemPath, "files.txt");
 
-            if (!File.Exists(complete))
-                File.Create(complete);
-
-            var data = new List<string>();
-
-            data.Add("-----------------------------");
-            data.Add($"Ratio 1 : {Ratio1}");
-            data.Add($"Ratio 2 : {Ratio2}");
-            data.Add($"image width : {imageWidth}");
-            data.Add($"image height : {imageHeight}");
-            data.Add($"screen width : {ScreenWidth}");
-            data.Add($"screen height : {ScreenHeight}");
-            data.Add($"new width : {newWidth}");
-            data.Add($"new height : {newHeight}");
-            data.Add("-----------------------------");
-
-            File.WriteAllLines(complete, data);
+            using (StreamWriter iso = new StreamWriter(complete, true))
+            {
+                iso.WriteLine("-----------------------------");
+                iso.WriteLine($"Ratio 1 : {Ratio1}");
+                iso.WriteLine($"Ratio 2 : {Ratio2}");
+                iso.WriteLine($"image width : {imageWidth}");
+                iso.WriteLine($"image height : {imageHeight}");
+                iso.WriteLine($"screen width : {ScreenWidth}");
+                iso.WriteLine($"screen height : {ScreenHeight}");
+                iso.WriteLine($"new width : {newWidth}");
+                iso.WriteLine($"new height : {newHeight}");
+                iso.WriteLine("-----------------------------");
+            }
         }
     }
 }
