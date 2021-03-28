@@ -8,7 +8,7 @@ using System.IO.IsolatedStorage;
 
 namespace MultiWallpaper
 {
-    class Storage
+    public class Storage
     {
         public Storage()
         {
@@ -75,6 +75,32 @@ namespace MultiWallpaper
             }
 
             return true;
+        }
+
+        public void SaveLog(float Ratio1, float Ratio2, int imageWidth, int imageHeight, int ScreenWidth, int ScreenHeight, float newWidth, float newHeight)
+        {
+            var systemPath = System.Environment.GetFolderPath(
+                Environment.SpecialFolder.LocalApplicationData
+            );
+            var complete = Path.Combine(systemPath, "files");
+
+            if (!File.Exists(complete))
+                File.Create(complete);
+
+            var data = new List<string>();
+
+            data.Add("-----------------------------");
+            data.Add($"Ratio 1 : {Ratio1}");
+            data.Add($"Ratio 2 : {Ratio2}");
+            data.Add($"image width : {imageWidth}");
+            data.Add($"image height : {imageHeight}");
+            data.Add($"screen width : {ScreenWidth}");
+            data.Add($"screen height : {ScreenHeight}");
+            data.Add($"new width : {newWidth}");
+            data.Add($"new height : {newHeight}");
+            data.Add("-----------------------------");
+
+            File.WriteAllLines(complete, data);
         }
     }
 }

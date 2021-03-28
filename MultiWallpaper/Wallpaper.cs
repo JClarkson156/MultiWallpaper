@@ -83,6 +83,8 @@ namespace MultiWallpaper
             var StartX = ImageSize.X;
             var StartY = ImageSize.Y;
 
+            var store = new Storage();
+
             Image test = null;
 
             Bitmap resultImage = new Bitmap(ImageSize.Width, ImageSize.Height, PixelFormat.Format24bppRgb);
@@ -108,10 +110,14 @@ namespace MultiWallpaper
                     {
                         float newWidth = arrPhysScreens[i].Bounds.Height * Ratio;
 
+                        store.SaveLog(Ratio, Ratio2, test.Width, test.Height, arrPhysScreens[i].Bounds.Width, arrPhysScreens[i].Bounds.Height,
+                            newWidth, arrPhysScreens[i].Bounds.Height);
                         grp.DrawImage(test, -StartX + arrPhysScreens[i].Bounds.X + (arrPhysScreens[i].Bounds.Width / 2) - (newWidth / 2), -StartY + arrPhysScreens[i].Bounds.Y, newWidth, arrPhysScreens[i].Bounds.Height);
                     }
                     else
                     {
+                        store.SaveLog(Ratio, Ratio2, test.Width, test.Height, arrPhysScreens[i].Bounds.Width, arrPhysScreens[i].Bounds.Height,
+                            0, 0);
                         grp.DrawImage(test, -StartX + arrPhysScreens[i].Bounds.X + (arrPhysScreens[i].Bounds.Width / 2) - (test.Width / 2), -StartY + arrPhysScreens[i].Bounds.Y);
                     }
                 }
@@ -121,10 +127,14 @@ namespace MultiWallpaper
                     {
                         float newHeight = arrPhysScreens[i].Bounds.Width / Ratio;
 
+                        store.SaveLog(Ratio, Ratio2, test.Width, test.Height, arrPhysScreens[i].Bounds.Width, arrPhysScreens[i].Bounds.Height,
+                            arrPhysScreens[i].Bounds.Width, newHeight);
                         grp.DrawImage(test, -StartX + arrPhysScreens[i].Bounds.X, -StartY + arrPhysScreens[i].Bounds.Y + (arrPhysScreens[i].Bounds.Height / 2) - (newHeight / 2), arrPhysScreens[i].Bounds.Width, newHeight);
                     }
                     else
                     {
+                        store.SaveLog(Ratio, Ratio2, test.Width, test.Height, arrPhysScreens[i].Bounds.Width, arrPhysScreens[i].Bounds.Height,
+                            0, 0);
                         grp.DrawImage(test, -StartX + arrPhysScreens[i].Bounds.X, -StartY + arrPhysScreens[i].Bounds.Y + (arrPhysScreens[i].Bounds.Height / 2) - (test.Height /2));
                     }
                 }
