@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 using System.IO;
+using System.Drawing;
 
 namespace MultiWallpaper
 {
@@ -30,7 +31,7 @@ namespace MultiWallpaper
 
         private string[] m_arrFolders;
         private Timer m_timer;
-        private string[] Paths = new string[4]{ ".bmp", ".jpg", ".jpeg", ".png" };
+        private string[] Paths = new string[5]{ ".bmp", ".jpg", ".jpeg", ".png", ".jfif" };
 
         public string[] ImagesSetToScreens { get; set; }
 
