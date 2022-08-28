@@ -17,7 +17,7 @@ namespace MultiWallpaper
         public CleanUp()
         { }
 
-        private  string[] Paths = new string[4] { ".bmp", ".jpg", ".jpeg", ".png" };
+        private  string[] Paths = new string[5] { ".bmp", ".jpg", ".jpeg", ".png", ".jfif" };
 
         public  void RemoveSmall(string directory)
         {
@@ -175,7 +175,7 @@ namespace MultiWallpaper
                 {
                     if (!File.Exists(dir + "\\" + file.Name))
                         file.MoveTo(dir + "\\" + file.Name);
-                    else
+                    /*else
                     {
                         for (var i = 1; i <= 8; i++)
                         {
@@ -184,7 +184,7 @@ namespace MultiWallpaper
                             if (!File.Exists(fileName2))
                                 file.MoveTo(fileName2);
                         }
-                    }
+                    }*/
                 }
                 catch
                 {

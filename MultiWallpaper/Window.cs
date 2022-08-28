@@ -20,11 +20,13 @@ namespace MultiWallpaper
             if (store.Load() == true)
                 arrFolders = store.Folders.Split(',');
 
-            if (arrFolders[arrFolders.Length - 1].Length == 0)
-                arrFolders = arrFolders.Take(arrFolders.Length - 1).ToArray();
+            if (arrFolders.Length > 0)
+            {
+                if (arrFolders[arrFolders.Length - 1].Length == 0)
+                    arrFolders = arrFolders.Take(arrFolders.Length - 1).ToArray();
 
-            if(arrFolders.Length > 0)
-                directory = new MultiWallpaper.Directories(arrFolders);
+                    directory = new MultiWallpaper.Directories(arrFolders);
+            }
 
             InitializeStrip();
             InitializeContext();

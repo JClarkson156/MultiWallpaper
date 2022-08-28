@@ -88,16 +88,20 @@ namespace MultiWallpaper
 
             m_timer.Stop();
             Random rnd = new Random();
-            
-            for (int i = 0; i < ImagesSetToScreens.Length; i++)
+
+            if (m_arrFiles.Count != 0)
             {
-                rnd = new Random(rnd.Next());
-                ImagesSetToScreens[i] = m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)];
+
+                for (int i = 0; i < ImagesSetToScreens.Length; i++)
+                {
+                    rnd = new Random(rnd.Next());
+                    ImagesSetToScreens[i] = m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)];
+                }
+
+                rnd = null;
+
+                Wallpaper.SetDesktopWallpaper(ImagesSetToScreens);
             }
-
-            rnd = null;
-
-            Wallpaper.SetDesktopWallpaper(ImagesSetToScreens);
 
             m_arrFiles = null;
             m_timer.Start();
