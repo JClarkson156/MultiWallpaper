@@ -60,13 +60,16 @@ namespace MultiWallpaper
             ToolStripMenuItem Test = new ToolStripMenuItem();
             Test.Text = "View Current Images";
 
-            for (int i = 0, len = directory.ScreenCount; i < len ; i++)
+            if (directory != null)
             {
-                ToolStripMenuItem images  = new ToolStripMenuItem();
-                images.Text = $"Image {i + 1}";
-                images.Click += OpenImage_Click;
-                Test.DropDownItems.Add(images);
-            }            
+                for (int i = 0, len = directory.ScreenCount; i < len; i++)
+                {
+                    ToolStripMenuItem images = new ToolStripMenuItem();
+                    images.Text = $"Image {i + 1}";
+                    images.Click += OpenImage_Click;
+                    Test.DropDownItems.Add(images);
+                }
+            }
 
             ToolStripMenuItem Change = new ToolStripMenuItem();
             Change.Text = "Change";

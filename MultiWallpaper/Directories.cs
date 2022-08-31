@@ -17,7 +17,7 @@ namespace MultiWallpaper
 
             m_timer = new Timer();
 
-            m_timer.Interval = 1 * 60 * 60 * 1000; //1 Hour
+            m_timer.Interval = 1 * 30 * 60 * 1000; //1 Hour
             m_timer.Elapsed += M_timer_Elapsed;
 
             Change();
@@ -92,15 +92,24 @@ namespace MultiWallpaper
             if (m_arrFiles.Count != 0)
             {
 
-                for (int i = 0; i < ImagesSetToScreens.Length; i++)
+                /*for (int i = 0; i < ImagesSetToScreens.Length; i++)
                 {
                     rnd = new Random(rnd.Next());
                     ImagesSetToScreens[i] = m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)];
+                }*/
+
+                //rnd = null;
+
+                //Wallpaper.SetDesktopWallpaper(ImagesSetToScreens);
+
+                var wallpaper = (IDesktopWallpaper)(new DesktopWallpaperClass());
+                for (uint i = 0; i < wallpaper.GetMonitorDevicePathCount(); i++)
+                {
+                    rnd = new Random(rnd.Next());
+                    var monitorId = wallpaper.GetMonitorDevicePathAt(i);
+                    wallpaper.SetWallpaper(monitorId, m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)]);
                 }
 
-                rnd = null;
-
-                Wallpaper.SetDesktopWallpaper(ImagesSetToScreens);
             }
 
             m_arrFiles = null;

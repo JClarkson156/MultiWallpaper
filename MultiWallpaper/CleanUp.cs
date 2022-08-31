@@ -175,16 +175,17 @@ namespace MultiWallpaper
                 {
                     if (!File.Exists(dir + "\\" + file.Name))
                         file.MoveTo(dir + "\\" + file.Name);
-                    /*else
+                    else
                     {
-                        for (var i = 1; i <= 8; i++)
+                        file.MoveTo(dir + "\\" + file.Name, true);
+                        /*for (var i = 1; i <= 8; i++)
                         {
                             var fileName2 = dir + "\\" + file.Name;
                             fileName2 = fileName2.Replace(file.Extension, "(" + i + ")" + file.Extension);
                             if (!File.Exists(fileName2))
                                 file.MoveTo(fileName2);
-                        }
-                    }*/
+                        }*/
+                    }
                 }
                 catch
                 {

@@ -83,6 +83,8 @@ namespace MultiWallpaper
             var StartX = ImageSize.X;
             var StartY = ImageSize.Y;
 
+            //var test = new DesktopWallpaperClass();
+
             var store = new Storage();
 
             Image test = null;

@@ -3,4 +3,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+    <_LastSelectedProfileId>C:\Users\James\OneDrive\Documents\Visual Studio 2015\Projects\MultiWallpaper\MultiWallpaper\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="frmCleanUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>
