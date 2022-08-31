@@ -17,7 +17,8 @@ namespace MultiWallpaper
             Storage store = new Storage();
 
             string[] arrFolders = new string[0];
-            if (store.Load() == true)
+            //if (store.Load() == true)
+            if (store.LoadData() == true)
                 arrFolders = store.Folders.Split(',');
 
             if (arrFolders.Length > 0)

@@ -15,7 +15,8 @@ namespace MultiWallpaper
 
             string strFolders = "";
 
-            if (m_Store.Load() == true)
+            //if (m_Store.Load() == true)
+            if (m_Store.LoadData() == true)
                 strFolders = m_Store.Folders;
 
             m_arrFolders = new List<string>();
@@ -50,7 +51,8 @@ namespace MultiWallpaper
         private void btnSet_Click(object sender, EventArgs e)
         {
             m_Store.Folders = String.Join(", ", m_arrFolders.ToArray());
-            m_Store.Save();
+            //m_Store.Save();
+            m_Store.SaveData();
 
             this.DialogResult = DialogResult.OK;
             this.Close();

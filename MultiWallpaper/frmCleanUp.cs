@@ -17,6 +17,7 @@ namespace MultiWallpaper
         public bool removeSmall = false;
         public bool removeDuplicate = false;
         public bool moveFiles = false;
+        public bool moveFiles2 = false;
 
         public bool ClosingForm { get; set; } = false;
 
@@ -58,6 +59,12 @@ namespace MultiWallpaper
                 stuff.SortImages();
             }
 
+            if (moveFiles2)
+            {
+                stuff.SortImages2();
+
+            }
+
             this.DialogResult = DialogResult.OK;
         }
 
@@ -74,6 +81,11 @@ namespace MultiWallpaper
         private void chkMove_CheckedChanged(object sender, EventArgs e)
         {
             moveFiles = !moveFiles;
+        }
+
+        private void chkMove2_CheckedChanged(object sender, EventArgs e)
+        {
+            moveFiles2 = !moveFiles2;
         }
     }
 }

@@ -77,6 +77,39 @@ namespace MultiWallpaper
             return true;
         }
 
+        public void SaveData()
+        {
+            var systemPath = System.Environment.GetFolderPath(
+                Environment.SpecialFolder.LocalApplicationData
+            );
+            var complete = Path.Combine(systemPath, "files2.txt");
+
+            using (StreamWriter iso = new StreamWriter(complete,false))
+            {
+                iso.WriteLine(m_strFolders.Trim());
+            }
+        }
+
+        public bool LoadData()
+        {
+            var systemPath = System.Environment.GetFolderPath(
+                Environment.SpecialFolder.LocalApplicationData
+            );
+            var complete = Path.Combine(systemPath, "files2.txt");
+            try
+            {
+                using (StreamReader iso = new StreamReader(complete))
+                {
+                    m_strFolders = iso.ReadLine();
+                }
+                return m_strFolders.Length > 0;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public void SaveLog(float Ratio1, float Ratio2, int imageWidth, int imageHeight, int ScreenWidth, int ScreenHeight, float newWidth, float newHeight)
         {
             var systemPath = System.Environment.GetFolderPath(

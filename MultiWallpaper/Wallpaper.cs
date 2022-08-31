@@ -97,7 +97,7 @@ namespace MultiWallpaper
             grp.SmoothingMode = SmoothingMode.HighQuality;
             grp.PixelOffsetMode = PixelOffsetMode.HighQuality;
             
-            grp.FillRectangle(Brushes.Black, 0, 0, ImageSize.Width, ImageSize.Height);
+            grp.FillRectangle(new SolidBrush(Color.FromArgb(167,134,213)), 0, 0, ImageSize.Width, ImageSize.Height);
 
             for (int i = 0; i < arrPhysScreens.Length; i++)
             {

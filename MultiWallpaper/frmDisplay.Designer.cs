@@ -42,9 +42,10 @@
             // btnSet
             // 
             this.btnSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSet.Location = new System.Drawing.Point(197, 248);
+            this.btnSet.Location = new System.Drawing.Point(388, 288);
+            this.btnSet.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSet.Name = "btnSet";
-            this.btnSet.Size = new System.Drawing.Size(75, 23);
+            this.btnSet.Size = new System.Drawing.Size(88, 27);
             this.btnSet.TabIndex = 0;
             this.btnSet.Text = "Accept";
             this.btnSet.UseVisualStyleBackColor = true;
@@ -53,9 +54,10 @@
             // btnBrowse
             // 
             this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnBrowse.Location = new System.Drawing.Point(13, 248);
+            this.btnBrowse.Location = new System.Drawing.Point(15, 286);
+            this.btnBrowse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowse.Size = new System.Drawing.Size(88, 27);
             this.btnBrowse.TabIndex = 2;
             this.btnBrowse.Text = "Browse...";
             this.btnBrowse.UseVisualStyleBackColor = true;
@@ -67,18 +69,22 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstFolders.FormattingEnabled = true;
-            this.lstFolders.Location = new System.Drawing.Point(13, 12);
+            this.lstFolders.ItemHeight = 15;
+            this.lstFolders.Location = new System.Drawing.Point(15, 14);
+            this.lstFolders.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.lstFolders.Name = "lstFolders";
             this.lstFolders.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstFolders.Size = new System.Drawing.Size(176, 225);
+            this.lstFolders.Size = new System.Drawing.Size(363, 259);
             this.lstFolders.Sorted = true;
             this.lstFolders.TabIndex = 3;
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(197, 12);
+            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefresh.Location = new System.Drawing.Point(388, 14);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(75, 36);
+            this.btnRefresh.Size = new System.Drawing.Size(88, 42);
             this.btnRefresh.TabIndex = 4;
             this.btnRefresh.Text = "Remove Selected";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -86,13 +92,14 @@
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 283);
+            this.ClientSize = new System.Drawing.Size(489, 327);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.lstFolders);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.btnSet);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "frmMain";
             this.Text = "Wallpaper";
             this.ResumeLayout(false);
