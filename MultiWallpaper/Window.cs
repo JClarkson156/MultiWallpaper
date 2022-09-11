@@ -96,7 +96,14 @@ namespace MultiWallpaper
             var item = sender as ToolStripMenuItem;
             var index = int.Parse(item.Text.Replace("Image ", ""));
 
-            Process.Start(directory.ImagesSetToScreens[index - 1]);
+            ProcessStartInfo startInfo = new ProcessStartInfo()
+            {
+                UseShellExecute = true,
+                FileName = directory.ImagesSetToScreens[index - 1]
+            };
+            Process.Start(startInfo);
+
+            //Process.Start(directory.ImagesSetToScreens[index - 1]);
         }
 
         private void CleanUp_Click(object sender, EventArgs e)
