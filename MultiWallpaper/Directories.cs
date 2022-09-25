@@ -9,7 +9,7 @@ namespace MultiWallpaper
 {
     class Directories
     {
-        public Directories(string[] arrFolders)
+        public Directories(string[] arrFolders, System.Windows.Forms.ContextMenuStrip menu)
         {
             m_arrFolders = arrFolders;
 
@@ -20,6 +20,8 @@ namespace MultiWallpaper
             m_timer.Interval = 1 * 30 * 60 * 1000; //1 Hour
             m_timer.Elapsed += M_timer_Elapsed;
 
+            Menu = menu;
+
             Change();
             m_timer.Start();
         }
@@ -29,6 +31,7 @@ namespace MultiWallpaper
             Change();
         }
 
+        public System.Windows.Forms.ContextMenuStrip Menu;
         private string[] m_arrFolders;
         private Timer m_timer;
         private string[] Paths = new string[5]{ ".bmp", ".jpg", ".jpeg", ".png", ".jfif" };
@@ -110,6 +113,9 @@ namespace MultiWallpaper
                     wallpaper.SetWallpaper(monitorId, m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)]);
                 }*/
             }
+
+            if (Menu.Items.Count > 0)
+                Menu.Items[0].Text = DateTime.Now.ToString("HH:mm");
 
             m_arrFiles = null;
             m_timer.Start();

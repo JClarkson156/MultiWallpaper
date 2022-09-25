@@ -21,12 +21,14 @@ namespace MultiWallpaper
             if (store.LoadData() == true)
                 arrFolders = store.Folders.Split(',');
 
+            menu = new ContextMenuStrip();
+
             if (arrFolders.Length > 0)
             {
                 if (arrFolders[arrFolders.Length - 1].Length == 0)
                     arrFolders = arrFolders.Take(arrFolders.Length - 1).ToArray();
 
-                    directory = new MultiWallpaper.Directories(arrFolders);
+                    directory = new MultiWallpaper.Directories(arrFolders, menu);
             }
 
             InitializeStrip();
@@ -48,11 +50,11 @@ namespace MultiWallpaper
                 Text = "Wallpaper Tool",
                 Visible = true
             };
+            notifyIcon.Click += Change_Click;
         }
 
         private void InitializeStrip()
         {
-            menu = new ContextMenuStrip();
 
             ToolStripMenuItem SetFolder = new ToolStripMenuItem();
             SetFolder.Text = "Set Folder";
@@ -84,6 +86,10 @@ namespace MultiWallpaper
             Exit.Text = "Exit";
             Exit.Click += Exit_Click;
 
+            ToolStripMenuItem Time = new ToolStripMenuItem();
+            Time.Text = DateTime.Now.ToString("HH:mm");
+
+            menu.Items.Add(Time);
             menu.Items.Add(SetFolder);
             menu.Items.Add(Test);
             menu.Items.Add(CleanUp);
@@ -139,7 +145,7 @@ namespace MultiWallpaper
             {
                 if (directory == null)
                 {
-                    directory = new Directories(main.getFolders);
+                    directory = new Directories(main.getFolders, menu);
                 }
                 else
                 {
