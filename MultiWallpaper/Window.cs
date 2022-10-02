@@ -21,40 +21,46 @@ namespace MultiWallpaper
             if (store.LoadData() == true)
                 arrFolders = store.Folders.Split(',');
 
-            menu = new ContextMenuStrip();
+            InitializeStrip();
+            InitializeContext();
 
             if (arrFolders.Length > 0)
             {
                 if (arrFolders[arrFolders.Length - 1].Length == 0)
                     arrFolders = arrFolders.Take(arrFolders.Length - 1).ToArray();
 
-                    directory = new MultiWallpaper.Directories(arrFolders, menu);
+                directory = new MultiWallpaper.Directories(arrFolders, notifyIcon);
             }
-
-            InitializeStrip();
-            InitializeContext();
 
             store = null;        
         }
 
+        NotifyIcon notifyIcon = null;
         private ContextMenuStrip menu;
         private Directories directory = null;
 
         private void InitializeContext()
         {
             Container components = new System.ComponentModel.Container();
-            NotifyIcon notifyIcon = new NotifyIcon(components)
+            notifyIcon = new NotifyIcon(components)
             {
                 ContextMenuStrip = menu,
                 Icon = MultiWallpaper.Properties.Resources.Icon,
                 Text = "Wallpaper Tool",
                 Visible = true
             };
-            notifyIcon.Click += Change_Click;
+            notifyIcon.Click += NotifyIcon_Click;
+        }
+
+        private void NotifyIcon_Click(object sender, EventArgs e)
+        {
+            if (((MouseEventArgs)e).Button == MouseButtons.Left)
+                Change_Click(sender, e);
         }
 
         private void InitializeStrip()
         {
+            menu = new ContextMenuStrip();
 
             ToolStripMenuItem SetFolder = new ToolStripMenuItem();
             SetFolder.Text = "Set Folder";
@@ -86,15 +92,28 @@ namespace MultiWallpaper
             Exit.Text = "Exit";
             Exit.Click += Exit_Click;
 
-            ToolStripMenuItem Time = new ToolStripMenuItem();
-            Time.Text = DateTime.Now.ToString("HH:mm");
+            //ToolStripMenuItem Time = new ToolStripMenuItem();
+            //Time.Text = DateTime.Now.ToString("HH:mm");
 
-            menu.Items.Add(Time);
+            ToolStripMenuItem Daily = new ToolStripMenuItem();
+            Daily.Text = "Open Daily";
+            Daily.Click += Daily_Click;
+
+            //menu.Items.Add(Time);
+            menu.Items.Add(Daily);
             menu.Items.Add(SetFolder);
             menu.Items.Add(Test);
             menu.Items.Add(CleanUp);
             menu.Items.Add(Change);
             menu.Items.Add(Exit);
+        }
+
+        private void Daily_Click(object sender, EventArgs e)
+        {
+            var test = new ProcessStartInfo("OneDriveDaily.lnk");
+            test.CreateNoWindow = false;
+            test.UseShellExecute = true;
+            Process.Start(test);
         }
 
         private void OpenImage_Click(object sender, EventArgs e)
@@ -145,7 +164,7 @@ namespace MultiWallpaper
             {
                 if (directory == null)
                 {
-                    directory = new Directories(main.getFolders, menu);
+                    directory = new Directories(main.getFolders, notifyIcon);
                 }
                 else
                 {
