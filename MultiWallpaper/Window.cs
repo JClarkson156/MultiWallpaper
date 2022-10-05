@@ -21,16 +21,19 @@ namespace MultiWallpaper
             if (store.LoadData() == true)
                 arrFolders = store.Folders.Split(',');
 
-            InitializeStrip();
-            InitializeContext();
 
             if (arrFolders.Length > 0)
             {
                 if (arrFolders[arrFolders.Length - 1].Length == 0)
                     arrFolders = arrFolders.Take(arrFolders.Length - 1).ToArray();
 
-                directory = new MultiWallpaper.Directories(arrFolders, notifyIcon);
+                directory = new MultiWallpaper.Directories(arrFolders);//, notifyIcon);
             }
+
+            InitializeStrip();
+            InitializeContext();
+
+            directory.NotifyIcon = notifyIcon;
 
             store = null;        
         }
@@ -164,7 +167,9 @@ namespace MultiWallpaper
             {
                 if (directory == null)
                 {
-                    directory = new Directories(main.getFolders, notifyIcon);
+                    directory = new Directories(main.getFolders);
+                    directory.NotifyIcon = notifyIcon;
+
                 }
                 else
                 {
