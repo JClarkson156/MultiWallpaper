@@ -34,6 +34,7 @@ namespace MultiWallpaper
             InitializeContext();
 
             directory.NotifyIcon = notifyIcon;
+            notifyIcon.Text = DateTime.Now.ToString("HH:mm");
 
             store = null;        
         }
@@ -169,6 +170,7 @@ namespace MultiWallpaper
                 {
                     directory = new Directories(main.getFolders);
                     directory.NotifyIcon = notifyIcon;
+                    notifyIcon.Text = DateTime.Now.ToString("HH:mm");
 
                 }
                 else
