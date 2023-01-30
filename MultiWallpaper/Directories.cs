@@ -22,8 +22,11 @@ namespace MultiWallpaper
 
             //NotifyIcon = notifyIcon;
 
+            store = new Storage();
+
             Change();
             m_timer.Start();
+
         }
 
         private void M_timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -39,6 +42,8 @@ namespace MultiWallpaper
         public string[] ImagesSetToScreens { get; set; }
 
         private List<string> m_arrFiles;
+
+        private Storage store;
 
         public int ScreenCount
         {
@@ -119,6 +124,8 @@ namespace MultiWallpaper
 
             m_arrFiles = null;
             m_timer.Start();
+
+            store.SaveData(ImagesSetToScreens);
         }
     }
 }

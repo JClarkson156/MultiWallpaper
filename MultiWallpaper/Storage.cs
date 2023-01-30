@@ -110,6 +110,22 @@ namespace MultiWallpaper
             }
         }
 
+        public void SaveData(string[] images)
+        {
+            var systemPath = System.Environment.GetFolderPath(
+                Environment.SpecialFolder.LocalApplicationData
+            );
+            var complete = Path.Combine(systemPath, "files3.txt");
+
+            using (StreamWriter iso = new StreamWriter(complete, true))
+            {
+                foreach (var line in images)
+                {
+                    iso.WriteLine(line);
+                }
+            }
+        }
+
         public void SaveLog(float Ratio1, float Ratio2, int imageWidth, int imageHeight, int ScreenWidth, int ScreenHeight, float newWidth, float newHeight)
         {
             var systemPath = System.Environment.GetFolderPath(

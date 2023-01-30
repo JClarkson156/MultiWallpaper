@@ -149,8 +149,10 @@ namespace MultiWallpaper
 
         private void Change_Click(object sender, EventArgs e)
         {
-            if(directory != null)
+            if (directory != null)
+            {
                 directory.Change();
+            }
         }
 
         private void Exit_Click(object sender, EventArgs e)
