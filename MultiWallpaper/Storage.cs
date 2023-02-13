@@ -112,7 +112,7 @@ namespace MultiWallpaper
 
         public void SaveData(string[] images)
         {
-            var systemPath = System.Environment.GetFolderPath(
+            /*var systemPath = System.Environment.GetFolderPath(
                 Environment.SpecialFolder.LocalApplicationData
             );
             var complete = Path.Combine(systemPath, "files3.txt");
@@ -123,7 +123,7 @@ namespace MultiWallpaper
                 {
                     iso.WriteLine(line);
                 }
-            }
+            }*/
         }
 
         public void SaveLog(float Ratio1, float Ratio2, int imageWidth, int imageHeight, int ScreenWidth, int ScreenHeight, float newWidth, float newHeight)
