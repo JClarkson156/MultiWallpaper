@@ -90,6 +90,20 @@ namespace MultiWallpaper
             return files;
         }
 
+        private string GetNextFile(Random rnd)
+        {
+            while (true)
+            {
+                var nextFile = m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)];
+                var nextFileInfo = new FileInfo(nextFile);
+                var dateCheck = DateTime.Now.AddDays(-7);
+                if (nextFileInfo.LastAccessTime > dateCheck &&
+                    (nextFileInfo.CreationTime < dateCheck || nextFileInfo.LastWriteTime < dateCheck)
+                )
+                    return nextFile;
+            }
+        }
+
         public void Change()
         {
             ChooseFiles();
@@ -103,7 +117,7 @@ namespace MultiWallpaper
                 for (int i = 0; i < ImagesSetToScreens.Length; i++)
                 {
                     rnd = new Random(rnd.Next());
-                    ImagesSetToScreens[i] = m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)];
+                    ImagesSetToScreens[i] = GetNextFile(rnd);
                 }
 
                 rnd = null;
