@@ -73,6 +73,7 @@ namespace MultiWallpaper
         private List<string> CountFiles(FileSystemInfo[] infos)
         {
             List<string> files = new List<string>();
+            var dateCheck = DateTime.Now.AddDays(-2);
             for (int i = 0; i < infos.Length; i++)
             {
                 if (infos[i] is DirectoryInfo)
@@ -81,7 +82,9 @@ namespace MultiWallpaper
                 }
                 else if (infos[i] is FileInfo)
                 {
-                    if(Paths.Contains((((FileInfo)infos[i]).Extension).ToLower()))
+                    if(Paths.Contains((((FileInfo)infos[i]).Extension).ToLower()) &&
+                        ((FileInfo)infos[i]).LastAccessTime < dateCheck
+                    )
                     {
                         files.Add(infos[i].FullName);
                     }
@@ -117,7 +120,7 @@ namespace MultiWallpaper
                 for (int i = 0; i < ImagesSetToScreens.Length; i++)
                 {
                     rnd = new Random(rnd.Next());
-                    ImagesSetToScreens[i] = GetNextFile(rnd);
+                    ImagesSetToScreens[i] = m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)];
                 }
 
                 rnd = null;
