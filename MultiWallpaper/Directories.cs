@@ -82,8 +82,8 @@ namespace MultiWallpaper
                 }
                 else if (infos[i] is FileInfo)
                 {
-                    if(Paths.Contains((((FileInfo)infos[i]).Extension).ToLower()) &&
-                        ((FileInfo)infos[i]).LastAccessTime < dateCheck
+                    if(Paths.Contains((((FileInfo)infos[i]).Extension).ToLower())// &&
+                       // ((FileInfo)infos[i]).LastAccessTime < dateCheck
                     )
                     {
                         files.Add(infos[i].FullName);
@@ -114,30 +114,40 @@ namespace MultiWallpaper
             m_timer.Stop();
             Random rnd = new Random();
 
-            if (m_arrFiles.Count != 0)
+            try
             {
+                if (m_timer.Interval == 120000)
+                    m_timer.Interval = 1 * 30 * 60 * 1000;
 
-                for (int i = 0; i < ImagesSetToScreens.Length; i++)
+                if (m_arrFiles.Count != 0)
                 {
-                    rnd = new Random(rnd.Next());
-                    ImagesSetToScreens[i] = m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)];
+
+                    for (int i = 0; i < ImagesSetToScreens.Length; i++)
+                    {
+                        rnd = new Random(rnd.Next());
+                        ImagesSetToScreens[i] = m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)];
+                    }
+
+                    rnd = null;
+
+                    Wallpaper.SetDesktopWallpaper(ImagesSetToScreens);
+
+                    /*var wallpaper = (IDesktopWallpaper)(new DesktopWallpaperClass());
+                    for (uint i = 0; i < wallpaper.GetMonitorDevicePathCount(); i++)
+                    {
+                        rnd = new Random(rnd.Next());
+                        var monitorId = wallpaper.GetMonitorDevicePathAt(i);
+                        wallpaper.SetWallpaper(monitorId, m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)]);
+                    }*/
                 }
 
-                rnd = null;
-
-                Wallpaper.SetDesktopWallpaper(ImagesSetToScreens);
-
-                /*var wallpaper = (IDesktopWallpaper)(new DesktopWallpaperClass());
-                for (uint i = 0; i < wallpaper.GetMonitorDevicePathCount(); i++)
-                {
-                    rnd = new Random(rnd.Next());
-                    var monitorId = wallpaper.GetMonitorDevicePathAt(i);
-                    wallpaper.SetWallpaper(monitorId, m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)]);
-                }*/
+                if (NotifyIcon != null)
+                    NotifyIcon.Text = DateTime.Now.ToString("HH:mm");
             }
-
-            if (NotifyIcon != null)
-                NotifyIcon.Text = DateTime.Now.ToString("HH:mm");
+            catch 
+            {
+                m_timer.Interval = 120000;
+            }
 
             m_arrFiles = null;
             m_timer.Start();

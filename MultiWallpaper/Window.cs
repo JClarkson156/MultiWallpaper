@@ -29,6 +29,10 @@ namespace MultiWallpaper
 
                 directory = new MultiWallpaper.Directories(arrFolders);//, notifyIcon);
             }
+            else
+            {
+                directory = new MultiWallpaper.Directories(new string[0]);
+            }
 
             InitializeStrip();
             InitializeContext();
