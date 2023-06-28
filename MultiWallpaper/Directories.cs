@@ -37,7 +37,7 @@ namespace MultiWallpaper
         public System.Windows.Forms.NotifyIcon NotifyIcon;
         private string[] m_arrFolders;
         private Timer m_timer;
-        private string[] Paths = new string[5]{ ".bmp", ".jpg", ".jpeg", ".png", ".jfif" };
+        private string[] Paths = new string[6]{ ".bmp", ".jpg", ".jpeg", ".png", ".jfif", ".webp" };
 
         public string[] ImagesSetToScreens { get; set; }
 
@@ -73,7 +73,7 @@ namespace MultiWallpaper
         private List<string> CountFiles(FileSystemInfo[] infos)
         {
             List<string> files = new List<string>();
-            var dateCheck = DateTime.Now.AddDays(-2);
+            var dateCheck = DateTime.Now.AddDays(-7);
             for (int i = 0; i < infos.Length; i++)
             {
                 if (infos[i] is DirectoryInfo)
@@ -82,8 +82,8 @@ namespace MultiWallpaper
                 }
                 else if (infos[i] is FileInfo)
                 {
-                    if(Paths.Contains((((FileInfo)infos[i]).Extension).ToLower())// &&
-                       // ((FileInfo)infos[i]).LastAccessTime < dateCheck
+                    if(Paths.Contains((((FileInfo)infos[i]).Extension).ToLower()) &&
+                        ((FileInfo)infos[i]).LastAccessTime < dateCheck
                     )
                     {
                         files.Add(infos[i].FullName);
@@ -95,11 +95,12 @@ namespace MultiWallpaper
 
         private string GetNextFile(Random rnd)
         {
+            var dateCheck = DateTime.Now.AddDays(-7);
+
             while (true)
             {
                 var nextFile = m_arrFiles[rnd.Next(0, m_arrFiles.Count - 1)];
                 var nextFileInfo = new FileInfo(nextFile);
-                var dateCheck = DateTime.Now.AddDays(-7);
                 if (nextFileInfo.LastAccessTime > dateCheck &&
                     (nextFileInfo.CreationTime < dateCheck || nextFileInfo.LastWriteTime < dateCheck)
                 )

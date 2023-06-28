@@ -17,7 +17,7 @@ namespace MultiWallpaper
         public CleanUp()
         { }
 
-        private  string[] Paths = new string[5] { ".bmp", ".jpg", ".jpeg", ".png", ".jfif" };
+        private  string[] Paths = new string[6] { ".bmp", ".jpg", ".jpeg", ".png", ".jfif", ".webp" };
 
         public  void RemoveSmall(string directory)
         {
