@@ -169,6 +169,8 @@ namespace MultiWallpaper
 
                 var dir = folder + "\\" + toCreate;
 
+                var time = DateTime.Now;
+
                 CreateDirectory(dir);
 
                 try
@@ -177,6 +179,8 @@ namespace MultiWallpaper
                         file.MoveTo(dir + "\\" + file.Name);
                     else
                     {
+                        file.LastAccessTime = time;
+                        time = time.AddSeconds(1);
                         file.MoveTo(dir + "\\" + file.Name, true);
                         /*for (var i = 1; i <= 8; i++)
                         {
