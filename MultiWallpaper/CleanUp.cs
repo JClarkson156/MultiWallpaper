@@ -176,11 +176,17 @@ namespace MultiWallpaper
                 try
                 {
                     if (!File.Exists(dir + "\\" + file.Name))
+                    {
+                        //file.LastWriteTime = time;
+                        file.LastAccessTime = time;
+                        //time = time.AddSeconds(-6);
                         file.MoveTo(dir + "\\" + file.Name);
+                    }
                     else
                     {
+                        //file.LastWriteTime = time;
                         file.LastAccessTime = time;
-                        time = time.AddSeconds(1);
+                        //time = time.AddSeconds(-6);
                         file.MoveTo(dir + "\\" + file.Name, true);
                         /*for (var i = 1; i <= 8; i++)
                         {
