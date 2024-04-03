@@ -34,6 +34,9 @@ namespace MultiWallpaper
                 else
                     ClosingForm = true;
             }
+
+            chkMove.Checked = true;
+            chkMove2.Checked = true;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -54,15 +57,14 @@ namespace MultiWallpaper
                 stuff.RemoveDuplicate(strDirectory);
             }
 
-            if (moveFiles)
-            {
-                stuff.SortImages();
-            }
-
             if (moveFiles2)
             {
                 stuff.SortImages2();
+            }
 
+            if (moveFiles)
+            {
+                stuff.SortImages();
             }
 
             this.DialogResult = DialogResult.OK;

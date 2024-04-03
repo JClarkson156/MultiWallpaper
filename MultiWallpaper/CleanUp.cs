@@ -205,37 +205,20 @@ namespace MultiWallpaper
 
         public void SortImages2()
         {
-
             var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-
             folder += "\\..\\SkyDrive camera roll";
-
+            
+            var endDir = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Pictures\\Unsorted";
             FileSystemInfo[] infos = new DirectoryInfo(folder).GetFileSystemInfos();
 
             var arrFiles = CountFiles(infos);
-
-
             foreach (var fileName in arrFiles)
             {
                 var file = new FileInfo(fileName);
-                int toCreate1 = file.LastWriteTime.Year;
-                int toCreate2 = file.LastWriteTime.Month;
-
-                var dir1 = folder + "\\" + toCreate1;
-                var dir2 = folder + "\\" + toCreate1 + "\\" + (toCreate2 < 10 ? "0" + toCreate2 : toCreate2);
-
-                CreateDirectory(dir1);
-                CreateDirectory(dir2);
 
                 try
                 {
-                    if (Path.GetFullPath(dir2 + "\\" + file.Name) == file.FullName) { }
-                    else if (!File.Exists(dir2 + "\\" + file.Name))
-                        file.MoveTo(dir2 + "\\" + file.Name);
-                    else
-                    {
-                        file.Delete();
-                    }
+                    file.MoveTo(endDir + "\\" + file.Name, true);
                 }
                 catch
                 {
