@@ -152,15 +152,16 @@ namespace MultiWallpaper
             }
         }
 
-        public void SortImages()
+        public void SortImages(DateTime prevDate)
         {
             var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
             folder += "\\Pictures";
 
             FileSystemInfo[] infos = new DirectoryInfo(folder + "\\Unsorted").GetFileSystemInfos();
-            //FileSystemInfo[] infos = new DirectoryInfo(folder).GetFileSystemInfos();
+            
             var arrFiles = CountFiles(infos);
+            var time = DateTime.Now;
 
             foreach (var fileName in arrFiles)
             {
@@ -169,41 +170,49 @@ namespace MultiWallpaper
 
                 var dir = folder + "\\" + toCreate;
 
-                var time = DateTime.Now;
-
                 CreateDirectory(dir);
-
-                try
+                if (file.CreationTime < prevDate)
                 {
-                    if (!File.Exists(dir + "\\" + file.Name))
+                    try
                     {
-                        //file.LastWriteTime = time;
-                        file.LastAccessTime = time;
-                        //time = time.AddSeconds(-6);
-                        file.MoveTo(dir + "\\" + file.Name);
-                    }
-                    else
-                    {
-                        //file.LastWriteTime = time;
-                        file.LastAccessTime = time;
-                        //time = time.AddSeconds(-6);
-                        file.MoveTo(dir + "\\" + file.Name, true);
-                        /*for (var i = 1; i <= 8; i++)
+                        if (!File.Exists(dir + "\\" + file.Name))
                         {
-                            var fileName2 = dir + "\\" + file.Name;
-                            fileName2 = fileName2.Replace(file.Extension, "(" + i + ")" + file.Extension);
-                            if (!File.Exists(fileName2))
-                                file.MoveTo(fileName2);
-                        }*/
+                            //file.LastWriteTime = time;
+                            file.LastAccessTime = time;
+                            //time = time.AddSeconds(-6);
+                            file.MoveTo(dir + "\\" + file.Name);
+                        }
+                        else
+                        {
+                            //file.LastWriteTime = time;
+                            file.LastAccessTime = time;
+                            //time = time.AddSeconds(-6);
+                            //file.MoveTo(dir + "\\" + file.Name, true);
+                            var i = 1;
+                            while (File.Exists(dir + "\\" + Path.GetFileNameWithoutExtension(file.Name) + $"({i})" + file.Extension))
+                                i++;
+
+                            file.MoveTo(dir + "\\" + Path.GetFileNameWithoutExtension(file.Name) + $"({i})" + file.Extension, true);
+                            var file2 = new FileInfo(dir + "\\" + file.Name);
+                            file2.LastAccessTime = time;
+
+                            /*for (var i = 1; i <= 8; i++)
+                            {
+                                var fileName2 = dir + "\\" + file.Name;
+                                fileName2 = fileName2.Replace(file.Extension, "(" + i + ")" + file.Extension);
+                                if (!File.Exists(fileName2))
+                                    file.MoveTo(fileName2);
+                            }*/
+                        }
                     }
-                }
-                catch
-                {
+                    catch
+                    {
+                    }
                 }
             }
         }
 
-        public void SortImages2()
+        public void SortImages2(DateTime prevDate)
         {
             var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             folder += "\\..\\SkyDrive camera roll";
@@ -215,13 +224,15 @@ namespace MultiWallpaper
             foreach (var fileName in arrFiles)
             {
                 var file = new FileInfo(fileName);
-
-                try
+                if (file.CreationTime < prevDate)
                 {
-                    file.MoveTo(endDir + "\\" + file.Name, true);
-                }
-                catch
-                {
+                    try
+                    {
+                        file.MoveTo(endDir + "\\" + file.Name, true);
+                    }
+                    catch
+                    {
+                    }
                 }
             }
         }

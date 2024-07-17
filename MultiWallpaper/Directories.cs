@@ -73,7 +73,7 @@ namespace MultiWallpaper
         private List<string> CountFiles(FileSystemInfo[] infos)
         {
             List<string> files = new List<string>();
-            var dateCheck = DateTime.Now.AddDays(-7);
+            var dateCheck = DateTime.Now.AddMonths(-6);
             for (int i = 0; i < infos.Length; i++)
             {
                 if (infos[i] is DirectoryInfo)

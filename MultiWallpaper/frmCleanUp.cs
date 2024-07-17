@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace MultiWallpaper
         public bool removeDuplicate = false;
         public bool moveFiles = false;
         public bool moveFiles2 = false;
+
+        private DateTime _prevDate;
 
         public bool ClosingForm { get; set; } = false;
 
@@ -35,8 +38,34 @@ namespace MultiWallpaper
                     ClosingForm = true;
             }
 
+            LoadData();
+
             chkMove.Checked = true;
             chkMove2.Checked = true;
+        }
+
+        public void LoadData()
+        {
+            var systemPath = System.Environment.GetFolderPath(
+                Environment.SpecialFolder.LocalApplicationData
+            );
+            var complete = Path.Combine(systemPath, "files3.txt");
+            DateTime prevDate = DateTime.Today;
+            try
+            {
+                using (StreamReader iso = new StreamReader(complete))
+                {
+                    string dateString = iso.ReadToEnd();
+                    DateTime.TryParse(dateString.Trim(), out prevDate);
+                }
+            }
+            catch
+            {
+            }
+            finally
+            {
+                _prevDate = prevDate;
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -59,12 +88,12 @@ namespace MultiWallpaper
 
             if (moveFiles2)
             {
-                stuff.SortImages2();
+                stuff.SortImages2(_prevDate);
             }
 
             if (moveFiles)
             {
-                stuff.SortImages();
+                stuff.SortImages(_prevDate);
             }
 
             this.DialogResult = DialogResult.OK;
