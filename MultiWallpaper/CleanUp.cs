@@ -119,7 +119,7 @@ namespace MultiWallpaper
             return b1.Length == b2.Length && memcmp(b1, b2, b1.Length) == 0;
         }
 
-        private List<string> CountFiles(FileSystemInfo[] infos)
+        private List<string> CountFiles(FileSystemInfo[] infos, bool skipFirstFolder = false)
         {
             List<string> files = new List<string>();
             Array.Sort<FileSystemInfo>(infos, delegate (FileSystemInfo a, FileSystemInfo b)
@@ -132,7 +132,7 @@ namespace MultiWallpaper
                 {
                     files.AddRange(CountFiles(((DirectoryInfo)infos[i]).GetFileSystemInfos()));
                 }
-                else if (infos[i] is FileInfo)
+                else if (!skipFirstFolder && infos[i] is FileInfo)
                 {
                     if (Paths.Contains((((FileInfo)infos[i]).Extension).ToLower()))
                     {
@@ -154,7 +154,8 @@ namespace MultiWallpaper
 
         public void SortImages(DateTime prevDate)
         {
-            var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            //var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            var folder = "F:\\Pictures";
 
             folder += "\\Pictures";
 
@@ -180,7 +181,10 @@ namespace MultiWallpaper
                             //file.LastWriteTime = time;
                             file.LastAccessTime = time;
                             //time = time.AddSeconds(-6);
-                            file.MoveTo(dir + "\\" + file.Name);
+                            if(file.FullName.Contains("PhoneFav"))
+                                file.MoveTo(dir + "\\a" + file.Name);
+                            else
+                                file.MoveTo(dir + "\\" + file.Name);
                         }
                         else
                         {
@@ -189,12 +193,21 @@ namespace MultiWallpaper
                             //time = time.AddSeconds(-6);
                             //file.MoveTo(dir + "\\" + file.Name, true);
                             var i = 1;
-                            while (File.Exists(dir + "\\" + Path.GetFileNameWithoutExtension(file.Name) + $"({i})" + file.Extension))
-                                i++;
+                            if (file.FullName.Contains("PhoneFav"))
+                            {
+                                file.MoveTo(dir + "\\a" + Path.GetFileNameWithoutExtension(file.Name) + file.Extension, true);
+                                var file2 = new FileInfo(dir + "\\" + file.Name);
+                                file2.LastAccessTime = time;
+                            }
+                            else
+                            {
+                                while (File.Exists(dir + "\\" + Path.GetFileNameWithoutExtension(file.Name) + $"({i})" + file.Extension))
+                                    i++;
 
-                            file.MoveTo(dir + "\\" + Path.GetFileNameWithoutExtension(file.Name) + $"({i})" + file.Extension, true);
-                            var file2 = new FileInfo(dir + "\\" + file.Name);
-                            file2.LastAccessTime = time;
+                                file.MoveTo(dir + "\\" + Path.GetFileNameWithoutExtension(file.Name) + $"({i})" + file.Extension, true);
+                                var file2 = new FileInfo(dir + "\\" + file.Name);
+                                file2.LastAccessTime = time;
+                            }
 
                             /*for (var i = 1; i <= 8; i++)
                             {
@@ -212,12 +225,14 @@ namespace MultiWallpaper
             }
         }
 
-        public void SortImages2(DateTime prevDate)
+        public void SortImages1(DateTime prevDate)
         {
             var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            folder += "\\..\\SkyDrive camera roll";
-            
-            var endDir = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Pictures\\Unsorted";
+            folder += "\\Pictures\\Unsorted\\MoveToPhone";
+
+            //var endDir = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Pictures\\Unsorted";
+            var endDir = "F:\\Pictures\\Pictures\\Unsorted";
+
             FileSystemInfo[] infos = new DirectoryInfo(folder).GetFileSystemInfos();
 
             var arrFiles = CountFiles(infos);
@@ -233,6 +248,60 @@ namespace MultiWallpaper
                     catch
                     {
                     }
+                }
+            }
+        }
+
+        public void SortImages2(DateTime prevDate)
+        {
+            var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            folder += "\\..\\SkyDrive camera roll";
+            
+            //var endDir = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Pictures\\Unsorted";
+            var endDir = "F:\\Pictures\\Pictures\\Unsorted";
+
+            FileSystemInfo[] infos = new DirectoryInfo(folder).GetFileSystemInfos();
+
+            var arrFiles = CountFiles(infos);
+            foreach (var fileName in arrFiles)
+            {
+                var file = new FileInfo(fileName);
+                if (file.CreationTime < prevDate)
+                {
+                    try
+                    {
+                        file.MoveTo(endDir + "\\" + file.Name, true);
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+        }
+
+        public void MoveDesktopImagesWIthFolderNames()
+        {
+            var folder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            //var endDir = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Pictures\\Unsorted";
+            var endDir = "F:\\Pictures\\Pictures\\Unsorted";
+
+            FileSystemInfo[] infos = new DirectoryInfo(folder).GetFileSystemInfos();
+
+            var arrFiles = CountFiles(infos, true);
+            foreach (var fileName in arrFiles)
+            {
+                var file = new FileInfo(fileName);
+                var split = file.DirectoryName.Split("\\");
+                var index = Array.IndexOf(split, "Desktop");
+
+                var newFileName = string.Join(" ",split.Skip(index + 1)) + " " + file.Name;
+                try
+                {
+                    file.MoveTo(endDir + "\\" + newFileName, false);
+                }
+                catch
+                {
                 }
             }
         }

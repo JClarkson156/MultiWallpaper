@@ -83,7 +83,8 @@ namespace MultiWallpaper
                 else if (infos[i] is FileInfo)
                 {
                     if(Paths.Contains((((FileInfo)infos[i]).Extension).ToLower()) &&
-                        ((FileInfo)infos[i]).LastAccessTime < dateCheck
+                        ((((FileInfo)infos[i]).LastAccessTime < dateCheck) ||
+                            (((FileInfo)infos[i]).LastAccessTime >= dateCheck && ((FileInfo)infos[i]).Attributes == (FileAttributes)5242912))
                     )
                     {
                         files.Add(infos[i].FullName);

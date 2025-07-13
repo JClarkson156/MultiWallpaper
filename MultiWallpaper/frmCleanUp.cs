@@ -19,6 +19,7 @@ namespace MultiWallpaper
         public bool removeDuplicate = false;
         public bool moveFiles = false;
         public bool moveFiles2 = false;
+        public bool moveFiles3 = false;
 
         private DateTime _prevDate;
 
@@ -91,8 +92,14 @@ namespace MultiWallpaper
                 stuff.SortImages2(_prevDate);
             }
 
+            if (moveFiles3)
+            {
+                stuff.MoveDesktopImagesWIthFolderNames();
+            }
+
             if (moveFiles)
             {
+                stuff.SortImages1(_prevDate);
                 stuff.SortImages(_prevDate);
             }
 
@@ -117,6 +124,11 @@ namespace MultiWallpaper
         private void chkMove2_CheckedChanged(object sender, EventArgs e)
         {
             moveFiles2 = !moveFiles2;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            moveFiles3 = !moveFiles3;
         }
     }
 }
