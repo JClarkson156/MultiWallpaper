@@ -159,7 +159,7 @@ namespace MultiWallpaper
 
             folder += "\\Pictures";
 
-            FileSystemInfo[] infos = new DirectoryInfo(folder + "\\Unsorted").GetFileSystemInfos();
+            FileSystemInfo[] infos = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Pictures\\Unsorted").GetFileSystemInfos();
             
             var arrFiles = CountFiles(infos);
             var time = DateTime.Now;
@@ -180,33 +180,55 @@ namespace MultiWallpaper
                         {
                             //file.LastWriteTime = time;
                             file.LastAccessTime = time;
+                            var dateCreated = File.GetCreationTime(file.Name);
+                            var dateEdited = File.GetLastWriteTime(file.Name);
+
                             //time = time.AddSeconds(-6);
-                            if(file.FullName.Contains("PhoneFav"))
-                                file.MoveTo(dir + "\\a" + file.Name);
+                            if (file.FullName.Contains("PhoneFav"))
+                            {
+                                var newName = dir + "\\a" + file.Name;
+                                file.MoveTo(newName);
+                                File.SetCreationTime(newName, dateCreated);
+                                File.SetLastWriteTime(newName, dateEdited);
+                            }
                             else
-                                file.MoveTo(dir + "\\" + file.Name);
+                            {
+                                var newName = dir + "\\" + file.Name;
+                                file.MoveTo(newName);
+                                File.SetCreationTime(newName, dateCreated);
+                                File.SetLastWriteTime(newName, dateEdited);
+                            }
                         }
                         else
                         {
                             //file.LastWriteTime = time;
                             file.LastAccessTime = time;
+                            var dateCreated = File.GetCreationTime(file.Name);
+                            var dateEdited = File.GetLastWriteTime(file.Name);
                             //time = time.AddSeconds(-6);
                             //file.MoveTo(dir + "\\" + file.Name, true);
                             var i = 1;
                             if (file.FullName.Contains("PhoneFav"))
                             {
-                                file.MoveTo(dir + "\\a" + Path.GetFileNameWithoutExtension(file.Name) + file.Extension, true);
+                                var newName = dir + "\\a" + Path.GetFileNameWithoutExtension(file.Name) + file.Extension;
+                                file.MoveTo(newName, true);
                                 var file2 = new FileInfo(dir + "\\" + file.Name);
                                 file2.LastAccessTime = time;
+                                File.SetCreationTime(newName, dateCreated);
+                                File.SetLastWriteTime(newName, dateEdited);
                             }
                             else
                             {
+
                                 while (File.Exists(dir + "\\" + Path.GetFileNameWithoutExtension(file.Name) + $"({i})" + file.Extension))
                                     i++;
 
-                                file.MoveTo(dir + "\\" + Path.GetFileNameWithoutExtension(file.Name) + $"({i})" + file.Extension, true);
+                                var newName = dir + "\\" + Path.GetFileNameWithoutExtension(file.Name) + $"({i})" + file.Extension;
+                                file.MoveTo(newName, true);
                                 var file2 = new FileInfo(dir + "\\" + file.Name);
                                 file2.LastAccessTime = time;
+                                File.SetCreationTime(newName, dateCreated);
+                                File.SetLastWriteTime(newName, dateEdited);
                             }
 
                             /*for (var i = 1; i <= 8; i++)
@@ -230,8 +252,8 @@ namespace MultiWallpaper
             var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             folder += "\\Pictures\\Unsorted\\MoveToPhone";
 
-            //var endDir = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Pictures\\Unsorted";
-            var endDir = "F:\\Pictures\\Pictures\\Unsorted";
+            var endDir = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Pictures\\Unsorted";
+            //var endDir = "F:\\Pictures\\Pictures\\Unsorted";
 
             FileSystemInfo[] infos = new DirectoryInfo(folder).GetFileSystemInfos();
 
@@ -257,8 +279,8 @@ namespace MultiWallpaper
             var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             folder += "\\..\\SkyDrive camera roll";
             
-            //var endDir = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Pictures\\Unsorted";
-            var endDir = "F:\\Pictures\\Pictures\\Unsorted";
+            var endDir = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Pictures\\Unsorted";
+            //var endDir = "F:\\Pictures\\Pictures\\Unsorted";
 
             FileSystemInfo[] infos = new DirectoryInfo(folder).GetFileSystemInfos();
 
@@ -283,8 +305,8 @@ namespace MultiWallpaper
         {
             var folder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            //var endDir = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Pictures\\Unsorted";
-            var endDir = "F:\\Pictures\\Pictures\\Unsorted";
+            var endDir = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Pictures\\Unsorted";
+            //var endDir = "F:\\Pictures\\Pictures\\Unsorted";
 
             FileSystemInfo[] infos = new DirectoryInfo(folder).GetFileSystemInfos();
 

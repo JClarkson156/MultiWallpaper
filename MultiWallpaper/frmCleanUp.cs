@@ -99,7 +99,7 @@ namespace MultiWallpaper
 
             if (moveFiles)
             {
-                stuff.SortImages1(_prevDate);
+                //stuff.SortImages1(_prevDate);
                 stuff.SortImages(_prevDate);
             }
 
